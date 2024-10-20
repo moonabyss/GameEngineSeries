@@ -11,94 +11,94 @@ using System.Threading.Tasks;
 
 namespace PrimalEditor.GameProject
 {
-[DataContract]
-public class ProjectData
-{
-    [DataMember]
-    public string ProjectName { get; set; }
-    [DataMember]
-    public string ProjectPath { get; set; }
-    [DataMember]
-    public DateTime Date { get; set; }
-
-    public string FullPath
+    [DataContract]
+    public class ProjectData
     {
-        get => $"{ProjectPath}{ProjectName}{Project.Extension}";
-    }
-    public byte[] Icon { get; set; }
-    public byte[] Screenshot { get; set; }
-}
+        [DataMember]
+        public string ProjectName { get; set; }
+        [DataMember]
+        public string ProjectPath { get; set; }
+        [DataMember]
+        public DateTime Date { get; set; }
 
-[DataContract]
-public class ProjectDataList
-{
-    [DataMember]
-    public List<ProjectData> Projects { get; set; }
-}
-public class OpenProject
-{
-    private static readonly string _aplicationDataPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\PrimalEditor\";
-    private static readonly string _projectDataPath;
-    private static readonly ObservableCollection<ProjectData> _projects = new ObservableCollection<ProjectData>();
-    public static ReadOnlyObservableCollection<ProjectData> Projects { get; }
-
-    private static void ReadProjectData()
-    {
-        if (File.Exists(_projectDataPath))
+        public string FullPath
         {
-            var projects = Serializer.FromFile<ProjectDataList>(_projectDataPath).Projects.OrderByDescending(x => x.Date);
-            _projects.Clear();
-            foreach (var project in projects)
+            get => $"{ProjectPath}{ProjectName}{Project.Extension}";
+        }
+        public byte[] Icon { get; set; }
+        public byte[] Screenshot { get; set; }
+    }
+
+    [DataContract]
+    public class ProjectDataList
+    {
+        [DataMember]
+        public List<ProjectData> Projects { get; set; }
+    }
+    public class OpenProject
+    {
+        private static readonly string _aplicationDataPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\PrimalEditor\";
+        private static readonly string _projectDataPath;
+        private static readonly ObservableCollection<ProjectData> _projects = new ObservableCollection<ProjectData>();
+        public static ReadOnlyObservableCollection<ProjectData> Projects { get; }
+
+        private static void ReadProjectData()
+        {
+            if (File.Exists(_projectDataPath))
             {
-                if (File.Exists(project.FullPath))
+                var projects = Serializer.FromFile<ProjectDataList>(_projectDataPath).Projects.OrderByDescending(x => x.Date);
+                _projects.Clear();
+                foreach (var project in projects)
                 {
-                    project.Icon = File.ReadAllBytes($@"{project.ProjectPath}\.Primal\Icon.png");
-                    project.Screenshot = File.ReadAllBytes($@"{project.ProjectPath}\.Primal\Screenshot.png");
-                    _projects.Add(project);
+                    if (File.Exists(project.FullPath))
+                    {
+                        project.Icon = File.ReadAllBytes($@"{project.ProjectPath}\.Primal\Icon.png");
+                        project.Screenshot = File.ReadAllBytes($@"{project.ProjectPath}\.Primal\Screenshot.png");
+                        _projects.Add(project);
+                    }
                 }
             }
         }
-    }
 
-    private static void WriteProjectData()
-    {
-        var project = _projects.OrderBy(x => x.Date).ToList();
-        Serializer.ToFile(new ProjectDataList { Projects = project }, _projectDataPath);
-    }
-
-    public static Project Open(ProjectData data)
-    {
-        ReadProjectData();
-        var project = _projects.FirstOrDefault(x => x.FullPath == data.FullPath);
-        if (project != null)
+        private static void WriteProjectData()
         {
-            project.Date = DateTime.Now;
+            var project = _projects.OrderBy(x => x.Date).ToList();
+            Serializer.ToFile(new ProjectDataList { Projects = project }, _projectDataPath);
         }
-        else
-        {
-            project = data;
-            project.Date = DateTime.Now;
-            _projects.Add(project);
-        }
-        WriteProjectData();
 
-        return Project.Load(project.FullPath);
-    }
-
-    static OpenProject()
-    {
-        try
+        public static Project Open(ProjectData data)
         {
-            if (!Directory.Exists(_aplicationDataPath)) Directory.CreateDirectory(_aplicationDataPath);
-            _projectDataPath = $@"{_aplicationDataPath}ProjectData.xml";
-            Projects = new ReadOnlyObservableCollection<ProjectData>(_projects);
             ReadProjectData();
+            var project = _projects.FirstOrDefault(x => x.FullPath == data.FullPath);
+            if (project != null)
+            {
+                project.Date = DateTime.Now;
+            }
+            else
+            {
+                project = data;
+                project.Date = DateTime.Now;
+                _projects.Add(project);
+            }
+            WriteProjectData();
+
+            return Project.Load(project.FullPath);
         }
-        catch (Exception ex)
+
+        static OpenProject()
         {
-            Debug.WriteLine(ex.Message);
-            // TODO: log errors
+            try
+            {
+                if (!Directory.Exists(_aplicationDataPath)) Directory.CreateDirectory(_aplicationDataPath);
+                _projectDataPath = $@"{_aplicationDataPath}ProjectData.xml";
+                Projects = new ReadOnlyObservableCollection<ProjectData>(_projects);
+                ReadProjectData();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                // TODO: log errors
+            }
         }
     }
-}
 }

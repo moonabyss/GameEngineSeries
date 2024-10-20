@@ -9,38 +9,38 @@ using System.Threading.Tasks;
 
 namespace PrimalEditor.Utilities
 {
-public static class Serializer
-{
-    public static void ToFile<T>(T instance, string path)
+    public static class Serializer
     {
-        try
+        public static void ToFile<T>(T instance, string path)
         {
-            using var fs = new FileStream(path, FileMode.Create);
-            var serializer = new DataContractSerializer(typeof(T));
-            serializer.WriteObject(fs, instance);
+            try
+            {
+                using var fs = new FileStream(path, FileMode.Create);
+                var serializer = new DataContractSerializer(typeof(T));
+                serializer.WriteObject(fs, instance);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                // TODO: log error
+            }
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            // TODO: log error
-        }
-    }
 
-    public static T FromFile<T>(string path)
-    {
-        try
+        public static T FromFile<T>(string path)
         {
-            using var fs = new FileStream(path, FileMode.Open);
-            var serializer = new DataContractSerializer(typeof(T));
-            T instance = (T)serializer.ReadObject(fs);
-            return instance;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            // TODO: log error
-            return default(T);
+            try
+            {
+                using var fs = new FileStream(path, FileMode.Open);
+                var serializer = new DataContractSerializer(typeof(T));
+                T instance = (T)serializer.ReadObject(fs);
+                return instance;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                // TODO: log error
+                return default(T);
+            }
         }
     }
-}
 }

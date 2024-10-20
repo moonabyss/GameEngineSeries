@@ -15,27 +15,27 @@ using System.Windows.Shapes;
 
 namespace PrimalEditor.GameProject
 {
-/// <summary>
-/// Interaction logic for NewProjectView.xaml
-/// </summary>
-public partial class NewProjectView : UserControl
-{
-    public NewProjectView() { InitializeComponent(); }
-
-    private void OnCreate_Button_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// Interaction logic for NewProjectView.xaml
+    /// </summary>
+    public partial class NewProjectView : UserControl
     {
-        var vm = DataContext as NewProject;
-        var projectPath = vm.CreateProject(templateListBox.SelectedItem as ProjectTemplate);
-        bool dialogResult = false;
-        var win = Window.GetWindow(this);
-        if (!string.IsNullOrEmpty(projectPath))
+        public NewProjectView() { InitializeComponent(); }
+
+        private void OnCreate_Button_Click(object sender, RoutedEventArgs e)
         {
-            dialogResult = true;
-            var project = OpenProject.Open(new ProjectData() { ProjectName = vm.ProjectName, ProjectPath = projectPath });
-            win.DataContext = project;
+            var vm = DataContext as NewProject;
+            var projectPath = vm.CreateProject(templateListBox.SelectedItem as ProjectTemplate);
+            bool dialogResult = false;
+            var win = Window.GetWindow(this);
+            if (!string.IsNullOrEmpty(projectPath))
+            {
+                dialogResult = true;
+                var project = OpenProject.Open(new ProjectData() { ProjectName = vm.ProjectName, ProjectPath = projectPath });
+                win.DataContext = project;
+            }
+            win.DialogResult = dialogResult;
+            win.Close();
         }
-        win.DialogResult = dialogResult;
-        win.Close();
     }
-}
 }

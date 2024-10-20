@@ -14,33 +14,33 @@ using System.Windows.Shapes;
 
 namespace PrimalEditor.GameProject
 {
-/// <summary>
-/// Interaction logic for ProjectBrowserDialog.xaml
-/// </summary>
-public partial class ProjectBrowserDialog : Window
-{
-    public ProjectBrowserDialog() { InitializeComponent(); }
-
-    private void OnToggleButton_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// Interaction logic for ProjectBrowserDialog.xaml
+    /// </summary>
+    public partial class ProjectBrowserDialog : Window
     {
-        if (sender == openProjectButton)
+        public ProjectBrowserDialog() { InitializeComponent(); }
+
+        private void OnToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if (createProjectButton.IsChecked == true)
+            if (sender == openProjectButton)
             {
-                createProjectButton.IsChecked = false;
-                browserContent.Margin = new Thickness(0);
+                if (createProjectButton.IsChecked == true)
+                {
+                    createProjectButton.IsChecked = false;
+                    browserContent.Margin = new Thickness(0);
+                }
+                openProjectButton.IsChecked = true;
             }
-            openProjectButton.IsChecked = true;
-        }
-        else
-        {
-            if (openProjectButton.IsChecked == true)
+            else
             {
-                openProjectButton.IsChecked = false;
-                browserContent.Margin = new Thickness(-800, 0, 0, 0);
+                if (openProjectButton.IsChecked == true)
+                {
+                    openProjectButton.IsChecked = false;
+                    browserContent.Margin = new Thickness(-800, 0, 0, 0);
+                }
+                createProjectButton.IsChecked = true;
             }
-            createProjectButton.IsChecked = true;
         }
     }
-}
 }

@@ -25,7 +25,7 @@ AlignEscapedNewlines: Left
 SpaceAfterLogicalNot: false
 AlwaysBreakTemplateDeclarations: Yes
 BreakConstructorInitializers: BeforeComma
-NamespaceIndentation: None
+NamespaceIndentation: All
 InsertNewlineAtEOF: true
 SpaceAfterCStyleCast: false
 AlignArrayOfStructures: Right

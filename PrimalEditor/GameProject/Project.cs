@@ -28,7 +28,7 @@ namespace PrimalEditor.GameProject
             get; private set;
         }
 
-        public string FullPath => $@"{Path}{Name}\\{Name}{Extension}";
+        public string FullPath => $@"{Path}{Name}\{Name}{Extension}";
 
         [DataMember(Name = "Scenes")]
         private ObservableCollection<Scene> _scenes = new ObservableCollection<Scene>();
@@ -75,9 +75,16 @@ namespace PrimalEditor.GameProject
             return Serializer.FromFile<Project>(file);
         }
 
-        public void Unload() {}
+        public void Unload()
+        {  //
+            UndoRedo.Reset();
+        }
 
-        public static void Save(Project project) { Serializer.ToFile(project, project.FullPath); }
+        public static void Save(Project project)
+        {
+            Serializer.ToFile(project, project.FullPath);
+            Logger.Log(MessageType.Info, $"Project saved to {project.FullPath}");
+        }
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)

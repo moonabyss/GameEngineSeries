@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace PrimalEditor.Utilities
 {
-    public interface IUndoRedo
+    interface IUndoRedo
     {
         string Name { get; }
         void Undo();
         void Redo();
     }
 
-    public class UndoRedoAction : IUndoRedo
+    class UndoRedoAction : IUndoRedo
     {
-        private Action _undoAction;
-        private Action _redoAction;
+        private readonly Action _undoAction;
+        private readonly Action _redoAction;
         public string Name { get; }
 
         public void Undo() => _undoAction();
@@ -33,18 +33,19 @@ namespace PrimalEditor.Utilities
         }
 
         public UndoRedoAction(string property, object instance, object undoValue, object redoValue, string name)
-            : this(                                                                              //
+            : this(
                   () => instance.GetType().GetProperty(property).SetValue(instance, undoValue),  //
                   () => instance.GetType().GetProperty(property).SetValue(instance, redoValue),  //
-                  name)
+                  name
+              )
         {}
     }
 
-    public class UndoRedo
+    class UndoRedo
     {
         private bool _enableAdd = true;
-        private readonly ObservableCollection<IUndoRedo> _redoList = new ObservableCollection<IUndoRedo>();
-        private readonly ObservableCollection<IUndoRedo> _undoList = new ObservableCollection<IUndoRedo>();
+        private readonly ObservableCollection<IUndoRedo> _redoList = [];
+        private readonly ObservableCollection<IUndoRedo> _undoList = [];
         public ReadOnlyObservableCollection<IUndoRedo> RedoList { get; }
         public ReadOnlyObservableCollection<IUndoRedo> UndoList { get; }
 

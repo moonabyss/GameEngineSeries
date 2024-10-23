@@ -1,6 +1,6 @@
 BasedOnStyle: Microsoft
 AccessModifierOffset: '-4'
-AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: BlockIndent
 AlignArrayOfStructures: Right
 AlignEscapedNewlines: LeftWithLastLine
 AlignOperands: AlignAfterOperator
@@ -14,6 +14,8 @@ AlwaysBreakTemplateDeclarations: Yes
 BreakBeforeBraces: Custom
 BraceWrapping:
   SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
   AfterClass: true
   AfterCaseLabel: true
   BeforeLambdaBody: true

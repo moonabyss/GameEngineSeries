@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PrimalEditor.GameProject
 {
     [DataContract]
-    public class ProjectTemplate
+    class ProjectTemplate
     {
         [DataMember]
         public string ProjectType { get; set; }
@@ -84,7 +84,7 @@ namespace PrimalEditor.GameProject
             }
         }
 
-        private ObservableCollection<ProjectTemplate> _projectTemplates = new ObservableCollection<ProjectTemplate>();
+        private readonly ObservableCollection<ProjectTemplate> _projectTemplates = [];
         public ReadOnlyObservableCollection<ProjectTemplate> ProjectTemplates { get; }
 
         private bool ValidateProjectPath()
@@ -165,7 +165,7 @@ namespace PrimalEditor.GameProject
             try
             {
                 var templatesFiles = Directory.GetFiles(_templatePath, "template.xml", SearchOption.AllDirectories);
-                Debug.Assert(templatesFiles.Any());
+                Debug.Assert(templatesFiles.Length > 0);
                 foreach (var file in templatesFiles)
                 {
                     var template = Serializer.FromFile<ProjectTemplate>(file);

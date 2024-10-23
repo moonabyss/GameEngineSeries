@@ -15,7 +15,7 @@ using System.Windows.Input;
 namespace PrimalEditor.GameProject
 {
     [DataContract(Name = "Game")]
-    public class Project : ViewModelBase
+    class Project : ViewModelBase
     {
         public static string Extension { get; } = ".primal";
 
@@ -31,7 +31,7 @@ namespace PrimalEditor.GameProject
         public string FullPath => $@"{Path}{Name}\{Name}{Extension}";
 
         [DataMember(Name = "Scenes")]
-        private ObservableCollection<Scene> _scenes = new ObservableCollection<Scene>();
+        private ObservableCollection<Scene> _scenes = [];
         public ReadOnlyObservableCollection<Scene> Scenes { get; private set; }
 
         private Scene _activeScene;
@@ -51,11 +51,11 @@ namespace PrimalEditor.GameProject
 
         public static UndoRedo UndoRedo { get; } = new UndoRedo();
 
-        public ICommand UndoCommand { get; private set; }
-        public ICommand RedoCommand { get; private set; }
-        public ICommand AddSceneCommand { get; private set; }
-        public ICommand RemoveSceneCommand { get; private set; }
-        public ICommand SaveCommand { get; private set; }
+        public ICommand? UndoCommand { get; private set; }
+        public ICommand? RedoCommand { get; private set; }
+        public ICommand? AddSceneCommand { get; private set; }
+        public ICommand? RemoveSceneCommand { get; private set; }
+        public ICommand? SaveCommand { get; private set; }
 
         private void AddScene(string sceneName)
         {
@@ -96,7 +96,7 @@ namespace PrimalEditor.GameProject
             }
             ActiveScene = Scenes.FirstOrDefault(x => x.IsActive);
 
-            AddSceneCommand = new RelayCommand<object>(  //
+            AddSceneCommand = new RelayCommand<object>(
                 x =>
                 {
                     AddScene($"New Scene {_scenes.Count}");
@@ -106,12 +106,12 @@ namespace PrimalEditor.GameProject
                     UndoRedo.Add(new UndoRedoAction(                 //
                         () => RemoveScene(newScene),                 //
                         () => _scenes.Insert(sceneIndex, newScene),  //
-                        $"Add {newScene.Name}")                      //
-                    );
-                }  //
+                        $"Add {newScene.Name}"
+                    ));
+                }
             );
 
-            RemoveSceneCommand = new RelayCommand<Scene>(  //
+            RemoveSceneCommand = new RelayCommand<Scene>(
                 x =>
                 {
                     var sceneIndex = _scenes.IndexOf(x);
@@ -120,10 +120,10 @@ namespace PrimalEditor.GameProject
                     UndoRedo.Add(new UndoRedoAction(          //
                         () => _scenes.Insert(sceneIndex, x),  //
                         () => RemoveScene(x),                 //
-                        $"Remove {x.Name}")                   //
-                    );
+                        $"Remove {x.Name}"
+                    ));
                 },
-                x => !x.IsActive  //
+                x => !x.IsActive
             );
 
             UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo());

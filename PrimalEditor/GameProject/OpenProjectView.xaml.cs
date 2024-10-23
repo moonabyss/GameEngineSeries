@@ -37,7 +37,7 @@ namespace PrimalEditor.GameProject
 
         private void OpenSelectedProject()
         {
-            var project = OpenProject.Open(projectsListBox.SelectedItem as ProjectData);
+            var project = OpenProject.Open((ProjectData)projectsListBox.SelectedItem);
             bool dialogResult = false;
             var win = Window.GetWindow(this);
             if (project != null)

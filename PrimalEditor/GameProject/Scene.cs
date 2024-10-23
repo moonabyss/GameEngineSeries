@@ -13,7 +13,7 @@ using System.Windows.Input;
 namespace PrimalEditor.GameProject
 {
     [DataContract]
-    public class Scene : ViewModelBase
+    class Scene : ViewModelBase
     {
         private string _name;
         [DataMember]
@@ -49,11 +49,11 @@ namespace PrimalEditor.GameProject
         }
 
         [DataMember(Name = nameof(GameEntities))]
-        private ObservableCollection<GameEntity> _gameEntities = new ObservableCollection<GameEntity>();
-        public ReadOnlyObservableCollection<GameEntity> GameEntities { get; private set; }
+        private ObservableCollection<GameEntity> _gameEntities = [];
+        public ReadOnlyObservableCollection<GameEntity>? GameEntities { get; private set; }
 
-        public ICommand AddGameEntityCommand { get; private set; }
-        public ICommand RemoveGameEntityCommand { get; private set; }
+        public ICommand? AddGameEntityCommand { get; private set; }
+        public ICommand? RemoveGameEntityCommand { get; private set; }
 
         private void AddGameEntity(GameEntity entity)
         {
@@ -76,7 +76,7 @@ namespace PrimalEditor.GameProject
                 OnPropertyChanged(nameof(GameEntities));
             }
 
-            AddGameEntityCommand = new RelayCommand<GameEntity>(  //
+            AddGameEntityCommand = new RelayCommand<GameEntity>(
                 x =>
                 {
                     AddGameEntity(x);
@@ -85,12 +85,12 @@ namespace PrimalEditor.GameProject
                     Project.UndoRedo.Add(new UndoRedoAction(         //
                         () => RemoveGameEntity(x),                   //
                         () => _gameEntities.Insert(entityIndex, x),  //
-                        $"Add {x.Name} to {Name}")                   //
-                    );
-                }  //
+                        $"Add {x.Name} to {Name}"
+                    ));
+                }
             );
 
-            RemoveGameEntityCommand = new RelayCommand<GameEntity>(  //
+            RemoveGameEntityCommand = new RelayCommand<GameEntity>(
                 x =>
                 {
                     var entityIndex = _gameEntities.IndexOf(x);
@@ -99,9 +99,9 @@ namespace PrimalEditor.GameProject
                     Project.UndoRedo.Add(new UndoRedoAction(         //
                         () => _gameEntities.Insert(entityIndex, x),  //
                         () => RemoveGameEntity(x),                   //
-                        $"Remove {x.Name}")                          //
-                    );
-                }  //
+                        $"Remove {x.Name}"
+                    ));
+                }
             );
         }
 

@@ -43,24 +43,24 @@ namespace PrimalEditor.Utilities
     static class Logger
     {
         public static int _messageFilter = (int)(MessageType.Info | MessageType.Warning | MessageType.Error);
-        private static ObservableCollection<LogMessage> _messages = new ObservableCollection<LogMessage>();
+        private static readonly ObservableCollection<LogMessage> _messages = [];
         public static ReadOnlyObservableCollection<LogMessage> Messages { get; } = new ReadOnlyObservableCollection<LogMessage>(_messages);
         public static CollectionViewSource FilteredMessages { get; } = new CollectionViewSource() { Source = Messages };
 
         public static async void Log(MessageType type, string msg, [CallerFilePath] string file = "", [CallerMemberName] string caller = "", [CallerLineNumber] int line = 0)
         {
-            await Application.Current.Dispatcher.BeginInvoke(new Action(  //
+            await Application.Current.Dispatcher.BeginInvoke(new Action(
                 () =>
-                { _messages.Add(new LogMessage(type, msg, file, caller, line)); })  //
-            );
+                { _messages.Add(new LogMessage(type, msg, file, caller, line)); }
+            ));
         }
 
-        public static async void Clear()  //
+        public static async void Clear()
         {
-            await Application.Current.Dispatcher.BeginInvoke(new Action(  //
+            await Application.Current.Dispatcher.BeginInvoke(new Action(
                 () =>
-                { _messages.Clear(); })  //
-            );
+                { _messages.Clear(); }
+            ));
         }
 
         public static void SetMessageFilter(int mask)
@@ -73,7 +73,7 @@ namespace PrimalEditor.Utilities
         {
             FilteredMessages.Filter += (s, e) =>
             {
-                var type = (int)(e.Item as LogMessage).MessageType;
+                var type = (int)((LogMessage)e.Item).MessageType;
                 e.Accepted = (type & _messageFilter) != 0;
             };
         }

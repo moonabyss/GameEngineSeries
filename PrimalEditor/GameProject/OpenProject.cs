@@ -36,11 +36,11 @@ namespace PrimalEditor.GameProject
         [DataMember]
         public List<ProjectData> Projects { get; set; }
     }
-    public class OpenProject
+    class OpenProject
     {
         private static readonly string _aplicationDataPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\PrimalEditor\";
         private static readonly string _projectDataPath;
-        private static readonly ObservableCollection<ProjectData> _projects = new ObservableCollection<ProjectData>();
+        private static readonly ObservableCollection<ProjectData> _projects = [];
         public static ReadOnlyObservableCollection<ProjectData> Projects { get; }
 
         private static void ReadProjectData()

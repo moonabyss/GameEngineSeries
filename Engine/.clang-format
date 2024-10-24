@@ -1,36 +1,39 @@
 BasedOnStyle: Microsoft
-IndentWidth: '4'
-UseTab: Never
-TabWidth: '4'
-BreakBeforeBraces: Custom
-BraceWrapping:
-  SplitEmptyFunction: false
-  AfterClass: true
-  AfterCaseLabel: true
-  BeforeLambdaBody: true
-ColumnLimit: '500'
 AccessModifierOffset: '-4'
-SortIncludes: true
+AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Right
+AlignEscapedNewlines: LeftWithLastLine
+AlignOperands: AlignAfterOperator
+AllowAllArgumentsOnNextLine: true
 AllowShortBlocksOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AllowShortFunctionsOnASingleLine: Inline
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortLambdasOnASingleLine: Inline
-IndentCaseLabels: true
-AlignAfterOpenBracket: Align
-AllowAllArgumentsOnNextLine: true
-PointerAlignment: Left
-SpacesBeforeTrailingComments: 2
-AlignEscapedNewlines: Left
-SpaceAfterLogicalNot: false
 AlwaysBreakTemplateDeclarations: Yes
-BreakConstructorInitializers: BeforeComma
-NamespaceIndentation: None
-InsertNewlineAtEOF: true
-SpaceAfterCStyleCast: false
-AlignArrayOfStructures: Right
-ShortNamespaceLines: 0
-EmptyLineBeforeAccessModifier: Always
-AlignOperands: AlignAfterOperator
+BreakBeforeBraces: Custom
+BraceWrapping:
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+  AfterClass: true
+  AfterCaseLabel: true
+  BeforeLambdaBody: true
 BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+ColumnLimit: '500'
+EmptyLineBeforeAccessModifier: Always
+IncludeBlocks: Preserve
+IndentCaseLabels: true
+IndentWidth: '4'
+InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: false
+NamespaceIndentation: None
+PointerAlignment: Left
+SortIncludes: true
+SpacesBeforeTrailingComments: 2
+SpaceAfterLogicalNot: false
+SpaceAfterCStyleCast: false
+ShortNamespaceLines: 0
+TabWidth: '4'
+UseTab: Never

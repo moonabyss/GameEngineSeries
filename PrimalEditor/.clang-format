@@ -7,7 +7,7 @@ AlignOperands: AlignAfterOperator
 AllowAllArgumentsOnNextLine: true
 AllowShortBlocksOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: WithoutElse
-AllowShortFunctionsOnASingleLine: Inline
+AllowShortFunctionsOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortLambdasOnASingleLine: Inline
 AlwaysBreakTemplateDeclarations: Yes

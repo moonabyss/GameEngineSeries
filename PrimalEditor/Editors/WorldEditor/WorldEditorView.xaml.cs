@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PrimalEditor.GameProject;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,17 @@ namespace PrimalEditor.Editors
     /// </summary>
     public partial class WorldEditorView : UserControl
     {
-        public WorldEditorView() { InitializeComponent(); }
+        public WorldEditorView()
+        {
+            InitializeComponent();
+            Loaded += OnWorldEditorViewLoaded;
+        }
+
+        private void OnWorldEditorViewLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnWorldEditorViewLoaded;
+            Focus();
+            ((INotifyCollectionChanged)Project.UndoRedo.UndoList).CollectionChanged += (s, e) => Focus();
+        }
     }
 }

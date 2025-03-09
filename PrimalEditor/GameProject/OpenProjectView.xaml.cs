@@ -31,9 +31,15 @@ namespace PrimalEditor.GameProject
             };
         }
 
-        private void OnOpen_Button_Click(object sender, RoutedEventArgs e) { OpenSelectedProject(); }
+        private void OnOpen_Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenSelectedProject();
+        }
 
-        private void OnListBoxItem_Mouse_DoubleClick(object sender, MouseButtonEventArgs e) { OpenSelectedProject(); }
+        private void OnListBoxItem_Mouse_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OpenSelectedProject();
+        }
 
         private void OpenSelectedProject()
         {

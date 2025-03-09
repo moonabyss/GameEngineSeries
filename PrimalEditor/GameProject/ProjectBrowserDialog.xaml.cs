@@ -19,7 +19,10 @@ namespace PrimalEditor.GameProject
     /// </summary>
     public partial class ProjectBrowserDialog : Window
     {
-        public ProjectBrowserDialog() { InitializeComponent(); }
+        public ProjectBrowserDialog()
+        {
+            InitializeComponent();
+        }
 
         private void OnToggleButton_Click(object sender, RoutedEventArgs e)
         {

@@ -24,9 +24,15 @@ namespace PrimalEditor
             }
         }
 
-        public bool CanExecute(object? parameter) { return _canExecute?.Invoke((T)parameter) ?? true; }
+        public bool CanExecute(object? parameter)
+        {
+            return _canExecute?.Invoke((T)parameter) ?? true;
+        }
 
-        public void Execute(object? parameter) { _execute((T)parameter); }
+        public void Execute(object? parameter)
+        {
+            _execute((T)parameter);
+        }
 
         public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
         {

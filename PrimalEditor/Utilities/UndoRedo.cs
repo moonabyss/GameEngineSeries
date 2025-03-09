@@ -25,7 +25,10 @@ namespace PrimalEditor.Utilities
 
         public void Undo() => _undoAction();
 
-        public UndoRedoAction(string name) { Name = name; }
+        public UndoRedoAction(string name)
+        {
+            Name = name;
+        }
 
         public UndoRedoAction(Action undo, Action redo, string name)
             : this(name)

@@ -20,7 +20,10 @@ namespace PrimalEditor.GameProject
     /// </summary>
     public partial class NewProjectView : UserControl
     {
-        public NewProjectView() { InitializeComponent(); }
+        public NewProjectView()
+        {
+            InitializeComponent();
+        }
 
         private void OnCreate_Button_Click(object sender, RoutedEventArgs e)
         {

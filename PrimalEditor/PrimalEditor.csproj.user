@@ -25,6 +25,9 @@
     <Compile Update="GameProject\ProjectBrowserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Utilities\LoggerView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Utilities\UndoRedoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

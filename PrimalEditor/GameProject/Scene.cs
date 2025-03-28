@@ -82,8 +82,8 @@ namespace PrimalEditor.GameProject
                     AddGameEntity(x);
                     var entityIndex = _gameEntities.Count - 1;
 
-                    Project.UndoRedo.Add(new UndoRedoAction(                 //
-                        () => RemoveGameEntity(x),         //
+                    Project.UndoRedo.Add(new UndoRedoAction(         //
+                        () => RemoveGameEntity(x),                   //
                         () => _gameEntities.Insert(entityIndex, x),  //
                         $"Add {x.Name} to {Name}"
                     ));
@@ -96,9 +96,9 @@ namespace PrimalEditor.GameProject
                     var entityIndex = _gameEntities.IndexOf(x);
                     RemoveGameEntity(x);
 
-                    Project.UndoRedo.Add(new UndoRedoAction(          //
+                    Project.UndoRedo.Add(new UndoRedoAction(         //
                         () => _gameEntities.Insert(entityIndex, x),  //
-                        () => RemoveGameEntity(x),         //
+                        () => RemoveGameEntity(x),                   //
                         $"Remove {x.Name}"
                     ));
                 }

@@ -72,11 +72,15 @@ namespace PrimalEditor.GameProject
             return Serializer.FromFile<Project>(file);
         }
 
-        public void UnLoad() {}
+        public void UnLoad()
+        {
+            UndoRedo.Reset();
+        }
 
         public static void Save(Project project)
         {
             Serializer.ToFile(project, project.FullPath);
+            Logger.Log(MessageType.Info, $"Project saved to {project.FullPath}");
         }
 
         [OnDeserialized]
@@ -97,7 +101,7 @@ namespace PrimalEditor.GameProject
                     var sceneIndex = _scenes.Count - 1;
 
                     UndoRedo.Add(new UndoRedoAction(                 //
-                        () => RemoveScene(newScene),         //
+                        () => RemoveScene(newScene),                 //
                         () => _scenes.Insert(sceneIndex, newScene),  //
                         $"Add {newScene.Name}"
                     ));
@@ -112,7 +116,7 @@ namespace PrimalEditor.GameProject
 
                     UndoRedo.Add(new UndoRedoAction(          //
                         () => _scenes.Insert(sceneIndex, x),  //
-                        () => RemoveScene(x),         //
+                        () => RemoveScene(x),                 //
                         $"Remove {x.Name}"
                     ));
                 },
